@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>agora - Political Science & Markets Made Simple</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f5f5f0;
+            color: #2d2d2d;
+        }
+
+        /* Navigation */
+        .top-banner {
+            background-color: #b8d4e8;
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+        }
+
+        nav {
+            background-color: white;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .logo {
+            font-size: 42px;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2d2d2d;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f4a6b8;
+        }
+
+        .join-btn {
+            border: 2px solid #2d2d2d;
+            padding: 10px 25px;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .join-btn:hover {
+            background: #2d2d2d;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #fef5f5 0%, #f5f5f0 100%);
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .hero .highlight {
+            color: #2d2d2d;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .hero-emoji {
+            font-size: 48px;
+            display: inline-block;
+        }
+
+        .cta-button {
+            margin-top: 30px;
+            padding: 15px 40px;
+            border: 2px solid #2d2d2d;
+            border-radius: 30px;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #2d2d2d;
+            color: white;
+        }
+
+        /* Ticker */
+        .ticker {
+            background: #c8e6c9;
+            padding: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Welcome Section */
+        .welcome {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .welcome h2 {
+            font-size: 36px;
+            margin: 20px 0;
+            line-height: 1.4;
+        }
+
+        .welcome p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, #c8e6c9 0%, #b8d4e8 100%);
+            padding: 60px 20px;
+            margin: 50px 0;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            color: white;
+        }
+
+        .newsletter-container h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-container p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto 15px auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        .newsletter-btn {
+            padding: 15px 35px;
+            background: #2d2d2d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .newsletter-btn:hover {
+            background: #4d4d4d;
+            transform: scale(1.05);
+        }
+
+        .newsletter-note {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        /* Cards Section */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: #ddd;
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .card-content h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .card-content p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-button {
+            padding: 10px 25px;
+            border: 2px solid #2d2d2d;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .card-button:hover {
+            background: #2d2d2d;
+            color: white;
+        }
+
+        .card.pink {
+            background: #f4a6b8;
+            color: white;
+        }
+
+        .card.pink .card-button {
+            border-color: white;
+            color: white;
+        }
+
+        .card.pink .card-button:hover {
+            background: white;
+            color: #f4a6b8;
+        }
+
+        .card.green {
+            background: #c8e6c9;
+        }
+
+        .card.blue {
+            background: #b8d4e8;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #2d2d2d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #4d4d4d;
+        }
+
+        .switch-auth {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+        }
+
+        .switch-auth a {
+            color: #f4a6b8;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Article Page Styles */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-free {
+            background: #c8e6c9;
+            color: #2d5f2d;
+        }
+
+        .badge-members {
+            background: #f4a6b8;
+            color: white;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background: #ddd;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 25px;
+        }
+
+        .article-content h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .article-content .meta {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .article-content p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Reading Page */
+        .reading-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 50px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .reading-container.dark-mode {
+            background: #2d2d2d;
+            color: #f5f5f0;
+        }
+
+        .reading-header {
+            margin-bottom: 30px;
+        }
+
+        .reading-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .reading-meta {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .reading-content {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .reading-content p {
+            margin-bottom: 20px;
+        }
+
+        .reading-controls {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Account Page */
+        .account-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .account-status {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 10px 0 20px 0;
+        }
+
+        .status-member {
+            background: #c8e6c9;
+            color: #2d5f2d;
+        }
+
+        .status-guest {
+            background: #f4a6b8;
+            color: white;
+        }
+
+        .pref-group {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .admin-form textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .admin-form select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            background: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .join-btn {
+                padding: 8px 20px;
+                font-size: 13px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero .subtitle {
+                font-size: 14px;
+            }
+
+            .hero-emoji {
+                font-size: 36px;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+
+            .ticker {
+                font-size: 11px;
+            }
+
+            .welcome h2 {
+                font-size: 28px;
+            }
+
+            .welcome p {
+                font-size: 15px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .card-content h3 {
+                font-size: 20px;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+
+            .reading-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .reading-header h1 {
+                font-size: 32px;
+            }
+
+            .reading-content {
+                font-size: 16px;
+            }
+
+            .reading-controls {
+                position: static;
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+
+            .account-container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .admin-panel {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 30px 20px;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .newsletter-section {
+                padding: 60px 20px;
+            }
+
+            .newsletter-container h2 {
+                font-size: 32px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .newsletter-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .reading-header h1 {
+                font-size: 26px;
+            }
+
+            .card-content h3 {
+                font-size: 18px;
+            }
+
+            .article-content h3 {
+                font-size: 20px;
+            }
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 20px;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .join-btn {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero .subtitle {
+                font-size: 14px;
+            }
+
+            .hero-emoji {
+                font-size: 36px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .welcome {
+                padding: 40px 20px;
+            }
+
+            .welcome h2 {
+                font-size: 28px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+
+            .reading-container {
+                padding: 30px 20px;
+                margin: 20px;
+                border-radius: 10px;
+            }
+
+            .reading-header h1 {
+                font-size: 32px;
+            }
+
+            .reading-content {
+                font-size: 16px;
+            }
+
+            .reading-controls {
+                position: static;
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 30px 20px;
+            }
+
+            .account-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+
+            .admin-panel {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+
+            .ticker {
+                font-size: 11px;
+            }
+
+            .article-card {
+                max-width: 100%;
+            }
+
+            .card-content h3,
+            .article-content h3 {
+                font-size: 20px;
+            }
+
+            .card-content p,
+            .article-content p {
+                font-size: 14px;
+            }
+
+            .pref-group {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .welcome h2 {
+                font-size: 24px;
+            }
+
+            .reading-header h1 {
+                font-size: 28px;
+            }
+
+            nav {
+                padding: 10px 15px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .cards-container {
+                padding: 20px 15px;
+            }
+
+            .articles-grid {
+                padding: 20px 15px;
+            }
+
+            .newsletter-section {
+                padding: 40px 15px;
+            }
+
+            .newsletter-container h2 {
+                font-size: 26px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">Making Political Science & Markets Simple ⚡</div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">agora</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showPage('home')">Home</a></li>
+            <li><a href="#" onclick="showPage('articles')">Articles</a></li>
+            <li><a href="#" onclick="showPage('about')">About</a></li>
+            <li><a href="#" onclick="showPage('account')" id="accountLink">Account</a></li>
+            <li><a href="#" onclick="showPage('admin')" id="adminLink" class="hidden">Admin</a></li>
+            <li>
+                <button class="join-btn" onclick="toggleAuth()" id="authButton">Join / Sign In</button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="homePage">
+        <!-- Hero Section -->
+        <section class="hero">
+            <p class="subtitle">Where politics gets simple</p>
+            <h1>
+                <span class="hero-emoji">📊</span><br>
+                <span class="highlight">the community</span><br>
+                for political science<br>
+                & markets
+            </h1>
+            <button class="cta-button" onclick="showPage('articles')">Explore Articles</button>
+        </section>
+
+        <!-- Ticker -->
+        <div class="ticker">
+            <div class="ticker-content">
+                MAKING POLITICAL SCIENCE SIMPLE | UNDERSTANDING MARKETS EASILY | INTERACTIVE CHARTS & ANALYSIS | MAKING POLITICAL SCIENCE SIMPLE | UNDERSTANDING MARKETS EASILY | INTERACTIVE CHARTS & ANALYSIS |
+            </div>
+        </div>
+
+        <!-- Welcome Section -->
+        <section class="welcome">
+            <div style="font-size: 30px; margin-bottom: 10px;">⚡</div>
+            <h5 style="text-transform: uppercase; letter-spacing: 2px; color: #999; font-size: 12px;">Welcome to Agora</h5>
+            <h2>For Students, The Strategy-Confused And The Politics-Obsessed.</h2>
+            <p>Helping students simplify their journey, understand their world and unlock their full potential, one article at a time.</p>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+            <div class="newsletter-container">
+                <h2>📬 Weekly Newsletter</h2>
+                <p>Get our top articles delivered to your inbox every week. Stay informed about politics and markets.</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+                <p class="newsletter-note">Free • No spam • Unsubscribe anytime</p>
+            </div>
+        </section>
+
+        <!-- Cards Section -->
+        <div class="cards-container">
+            <div class="card pink">
+                <div style="height: 150px; display: flex; align-items: center; justify-content: center; font-size: 60px;">📚</div>
+                <div class="card-content">
+                    <h3>All Articles</h3>
+                    <p>Browse our complete library of articles covering both political science and market analysis, from beginner-friendly introductions to advanced deep dives.</p>
+                    <button class="card-button" onclick="filterArticles('all')">Browse All Articles</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="height: 150px; display: flex; align-items: center; justify-content: center; font-size: 60px;">📈</div>
+                <div class="card-content">
+                    <h3>Interactive Charts</h3>
+                    <p>Explore market-focused articles with interactive charts, data visualizations, and analysis of economic trends, trading, and financial systems.</p>
+                    <button class="card-button" onclick="filterArticles('markets')">View Market Articles</button>
+                </div>
+            </div>
+
+            <div class="card green">
+                <div style="height: 150px; display: flex; align-items: center; justify-content: center; font-size: 60px;">🌍</div>
+                <div class="card-content">
+                    <h3>Global Insights</h3>
+                    <p>Deep dive into political systems, governance, international relations, and policy analysis with real-world examples from around the globe.</p>
+                    <button class="card-button" onclick="filterArticles('politics')">View Political Articles</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Articles Page -->
+    <div id="articlesPage" class="hidden">
+        <section class="hero" style="padding: 60px 20px;">
+            <h1 style="font-size: 48px;">Latest Articles</h1>
+            <p style="margin-top: 15px; color: #666;">Deep dives into political science and market analysis</p>
+        </section>
+
+        <div class="articles-grid" id="articlesGrid">
+            <!-- Articles will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Article Reading Page -->
+    <div id="readingPage" class="hidden">
+        <div class="reading-controls">
+            <div class="toggle-switch">
+                <span>🌙</span>
+                <label style="cursor: pointer;">
+                    <input type="checkbox" id="darkModeToggle" onchange="toggleReadingMode()" style="margin: 0 5px;">
+                    Dark Mode
+                </label>
+            </div>
+        </div>
+        <div class="reading-container" id="readingContainer">
+            <!-- Article content will be loaded here -->
+        </div>
+        <div style="text-align: center; margin: 30px;">
+            <button class="cta-button" onclick="showPage('articles')">← Back to Articles</button>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="aboutPage" class="hidden">
+        <section class="hero" style="padding: 60px 20px;">
+            <h1 style="font-size: 48px;">About agora</h1>
+        </section>
+        
+        <div style="max-width: 800px; margin: 50px auto; padding: 40px; background: white; border-radius: 15px;">
+            <h2 style="font-size: 32px; margin-bottom: 20px;">Our Mission</h2>
+            <p style="font-size: 18px; line-height: 1.8; color: #666; margin-bottom: 30px;">
+                We believe that understanding politics and markets shouldn't be overwhelming. agora was created to break down complex political science concepts and market dynamics into simple, interactive, and engaging content.
+            </p>
+            
+            <h2 style="font-size: 32px; margin-bottom: 20px; margin-top: 40px;">What We Offer</h2>
+            <p style="font-size: 18px; line-height: 1.8; color: #666; margin-bottom: 20px;">
+                • Interactive charts and visualizations<br>
+                • In-depth political analysis made simple<br>
+                • Market trends and insights<br>
+                • Polls and data-driven content<br>
+                • Real-world examples and case studies
+            </p>
+
+            <h2 style="font-size: 32px; margin-bottom: 20px; margin-top: 40px;">Join Our Community</h2>
+            <p style="font-size: 18px; line-height: 1.8; color: #666;">
+                Sign up for free to access exclusive member-only articles and customize your reading experience. Together, we're making political science and markets accessible to everyone.
+            </p>
+        </div>
+    </div>
+
+    <!-- Account Page -->
+    <div id="accountPage" class="hidden">
+        <div class="account-container">
+            <h1>Your Account</h1>
+            <div id="accountInfo">
+                <!-- Account info will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPage" class="hidden">
+        <div class="admin-panel">
+            <h1>Admin Panel - Add New Article</h1>
+            <p style="color: #666; margin-bottom: 30px;">Create and publish new articles</p>
+            
+            <div style="margin-bottom: 30px;">
+                <button class="card-button" onclick="viewNewsletterSubscribers()" style="background: #b8d4e8; border-color: #b8d4e8; padding: 12px 25px;">
+                    📬 View Newsletter Subscribers
+                </button>
+            </div>
+            
+            <form class="admin-form" onsubmit="addArticle(event)">
+                <div class="form-group">
+                    <label>Article Title</label>
+                    <input type="text" id="articleTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Excerpt (Short Description)</label>
+                    <input type="text" id="articleExcerpt" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Full Article Content</label>
+                    <textarea id="articleContent" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Category (Where will this article appear?)</label>
+                    <select id="articleCategory" required>
+                        <option value="markets">Markets (Interactive Charts section)</option>
+                        <option value="politics">Politics (Global Insights section)</option>
+                    </select>
+                    <p style="font-size: 13px; color: #999; margin-top: 5px;">
+                        ℹ️ All articles appear in "All Articles". Choose Markets for economic/trading topics, Politics for governance/international relations.
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label>Access Level</label>
+                    <select id="articleAccess" required>
+                        <option value="free">Free (Everyone can read)</option>
+                        <option value="members">Members Only</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">Publish Article</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            
+            <!-- Login Form -->
+            <div id="loginForm">
+                <h2>Sign In</h2>
+                <form onsubmit="login(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Sign In</button>
+                </form>
+                <div class="switch-auth">
+                    Don't have an account? <a onclick="switchToSignup()">Sign up</a>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupForm" class="hidden">
+                <h2>Create Account</h2>
+                <p style="color: #666; margin-bottom: 20px;">Join for free to access all articles!</p>
+                <form onsubmit="signup(event)">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="signupName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signupPassword" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Create Account</button>
+                </form>
+                <div class="switch-auth">
+                    Already have an account? <a onclick="switchToLogin()">Sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 agora. Making political science and markets simple.</p>
+    </footer>
+
+    <script>
+        // State management
+        let currentUser = null;
+        let currentFilter = 'all'; // Track current filter
+        let articles = [
+            {
+                id: 1,
+                title: "Understanding Global Trade Wars",
+                excerpt: "A comprehensive look at how trade policies shape international relations and market dynamics.",
+                content: "Trade wars have become increasingly common in modern geopolitics. This article explores the mechanisms behind tariffs, quotas, and their ripple effects across global markets. From the US-China trade tensions to Brexit's impact on European commerce, we examine real-world cases with interactive charts showing trade volume changes over time. Understanding these dynamics is crucial for students of both political science and economics.",
+                access: "free",
+                category: "markets",
+                date: "2026-02-05",
+                author: "agora Team"
+            },
+            {
+                id: 2,
+                title: "The Rise of Populism in Western Democracies",
+                excerpt: "Analyzing the factors behind populist movements and their electoral success.",
+                content: "Populist movements have reshaped the political landscape across Western democracies. This deep dive examines the socioeconomic factors, media influence, and cultural shifts that have fueled populist sentiment. Through polling data and electoral analysis, we trace the trajectory of populist parties from fringe movements to mainstream political forces. Interactive maps show regional variations in populist support, while timeline visualizations highlight key moments in this political transformation.",
+                access: "members",
+                category: "politics",
+                date: "2026-02-03",
+                author: "agora Team"
+            },
+            {
+                id: 3,
+                title: "Central Banks and Monetary Policy Explained",
+                excerpt: "How central banks influence economies through interest rates and quantitative easing.",
+                content: "Central banks play a pivotal role in economic stability. This article demystifies monetary policy tools including interest rate adjustments, reserve requirements, and quantitative easing. We examine case studies from the Federal Reserve, European Central Bank, and Bank of Japan, with interactive charts showing the relationship between policy changes and economic indicators like inflation and unemployment. Perfect for students seeking to understand the intersection of economics and policy-making.",
+                access: "free",
+                category: "markets",
+                date: "2026-02-01",
+                author: "agora Team"
+            },
+            {
+                id: 4,
+                title: "Electoral Systems: First-Past-the-Post vs Proportional Representation",
+                excerpt: "Comparing different voting systems and their impact on democratic representation.",
+                content: "Electoral systems fundamentally shape political outcomes. This comprehensive analysis compares first-past-the-post, proportional representation, and mixed systems used around the world. Through simulation models and historical data, we show how different systems affect party representation, coalition formation, and voter behavior. Interactive visualizations allow you to see how the same election results would differ under various electoral frameworks.",
+                access: "members",
+                category: "politics",
+                date: "2026-01-30",
+                author: "agora Team"
+            },
+            {
+                id: 5,
+                title: "Stock Market Basics for Beginners",
+                excerpt: "A student-friendly introduction to how stock markets work and why they matter.",
+                content: "The stock market can seem intimidating, but it's fundamentally about companies raising capital and investors seeking returns. This beginner's guide covers market mechanics, key terminology, and the relationship between stock prices and company performance. We include interactive price charts, explanations of market indices, and simple examples of how economic events affect stock values. Essential reading for students exploring finance and economics.",
+                access: "free",
+                category: "markets",
+                date: "2026-01-28",
+                author: "agora Team"
+            },
+            {
+                id: 6,
+                title: "The European Union: Integration and Challenges",
+                excerpt: "Exploring the EU's evolution, institutions, and contemporary political challenges.",
+                content: "The European Union represents one of history's most ambitious political experiments. This article traces the EU's development from the Treaty of Rome to the present day, examining its complex institutional structure and decision-making processes. We analyze current challenges including migration policy, economic disparities between member states, and the rise of Euroscepticism. Interactive maps show EU expansion over time, while charts illustrate economic integration through trade data.",
+                access: "members",
+                category: "politics",
+                date: "2026-01-25",
+                author: "agora Team"
+            }
+        ];
+
+        // Load articles from localStorage on page load
+        const savedArticles = localStorage.getItem('articles');
+        if (savedArticles) {
+            articles = JSON.parse(savedArticles);
+        }
+
+        // Check for logged in user
+        const savedUser = localStorage.getItem('currentUser');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+            updateAuthUI();
+        }
+
+        // Initialize
+        renderArticles();
+        updateAccountPage();
+
+        function showPage(page) {
+            // Hide all pages
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('articlesPage').classList.add('hidden');
+            document.getElementById('aboutPage').classList.add('hidden');
+            document.getElementById('accountPage').classList.add('hidden');
+            document.getElementById('adminPage').classList.add('hidden');
+            document.getElementById('readingPage').classList.add('hidden');
+
+            // Show selected page
+            document.getElementById(page + 'Page').classList.remove('hidden');
+
+            // Reset filter when going to articles page from nav
+            if (page === 'articles') {
+                currentFilter = 'all';
+                const heroSection = document.querySelector('#articlesPage .hero h1');
+                heroSection.textContent = 'All Articles';
+                heroSection.nextElementSibling.textContent = 'Browse our complete library of political science and market analysis';
+                renderArticles();
+            }
+
+            // Update account page when shown
+            if (page === 'account') {
+                updateAccountPage();
+            }
+        }
+
+        function toggleAuth() {
+            if (currentUser) {
+                logout();
+            } else {
+                document.getElementById('authModal').style.display = 'flex';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        function switchToSignup() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('signupForm').classList.remove('hidden');
+        }
+
+        function switchToLogin() {
+            document.getElementById('signupForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        function signup(event) {
+            event.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            // In a real app, you'd send this to a server
+            currentUser = { name, email, isAdmin: email === 'admin@agora.com' };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            updateAuthUI();
+            closeModal();
+            alert('Account created successfully! Welcome to agora 🎉');
+        }
+
+        function login(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Simple demo login
+            currentUser = { name: email.split('@')[0], email, isAdmin: email === 'admin@agora.com' };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            updateAuthUI();
+            closeModal();
+            alert('Welcome back! 👋');
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            showPage('home');
+            alert('Logged out successfully!');
+        }
+
+        function updateAuthUI() {
+            const authButton = document.getElementById('authButton');
+            const adminLink = document.getElementById('adminLink');
+            
+            if (currentUser) {
+                authButton.textContent = 'Logout';
+                if (currentUser.isAdmin) {
+                    adminLink.classList.remove('hidden');
+                }
+            } else {
+                authButton.textContent = 'Join / Sign In';
+                adminLink.classList.add('hidden');
+            }
+            
+            renderArticles();
+        }
+
+        function renderArticles() {
+            const grid = document.getElementById('articlesGrid');
+            grid.innerHTML = '';
+
+            // Filter articles based on current filter
+            const filteredArticles = currentFilter === 'all' 
+                ? articles 
+                : articles.filter(article => article.category === currentFilter);
+
+            if (filteredArticles.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1;">No articles found in this category yet.</p>';
+                return;
+            }
+
+            filteredArticles.forEach(article => {
+                const canAccess = article.access === 'free' || currentUser;
+                
+                const card = document.createElement('div');
+                card.className = 'article-card';
+                card.innerHTML = `
+                    <div class="article-badge badge-${article.access}">
+                        ${article.access === 'free' ? '🌟 Free' : '🔒 Members Only'}
+                    </div>
+                    <div class="article-image" style="background: linear-gradient(135deg, ${article.access === 'free' ? '#c8e6c9' : '#f4a6b8'}, ${article.access === 'free' ? '#81c784' : '#f48fb1'}); display: flex; align-items: center; justify-content: center; font-size: 50px;">
+                        ${article.category === 'markets' ? '📊' : '🏛️'}
+                    </div>
+                    <div class="article-content">
+                        <h3>${article.title}</h3>
+                        <div class="meta">${article.date} • ${article.author} • ${article.category === 'markets' ? 'Markets' : 'Politics'}</div>
+                        <p>${article.excerpt}</p>
+                        <button class="card-button" onclick="${canAccess ? `readArticle(${article.id})` : `toggleAuth()`}">
+                            ${canAccess ? 'Read Article' : 'Sign In to Read'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterArticles(category) {
+            currentFilter = category;
+            showPage('articles');
+            
+            // Update page title based on filter
+            const heroSection = document.querySelector('#articlesPage .hero h1');
+            if (category === 'markets') {
+                heroSection.textContent = 'Interactive Charts';
+                heroSection.nextElementSibling.textContent = 'Market analysis with data visualizations and economic trends';
+            } else if (category === 'politics') {
+                heroSection.textContent = 'Global Insights';
+                heroSection.nextElementSibling.textContent = 'Political systems, governance, and international relations explained';
+            } else {
+                heroSection.textContent = 'All Articles';
+                heroSection.nextElementSibling.textContent = 'Browse our complete library of political science and market analysis';
+            }
+            
+            renderArticles();
+        }
+
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = document.getElementById('newsletterEmail').value;
+            
+            // In a real app, you'd send this to your email service (Mailchimp, SendGrid, etc.)
+            // For now, we'll save it locally
+            let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+            
+            if (subscribers.includes(email)) {
+                alert('You\'re already subscribed! 📬');
+            } else {
+                subscribers.push(email);
+                localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+                alert('Thanks for subscribing! 🎉 You\'ll receive our weekly newsletter with top articles.');
+                event.target.reset();
+            }
+        }
+
+        function readArticle(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+
+            const canAccess = article.access === 'free' || currentUser;
+            if (!canAccess) {
+                toggleAuth();
+                return;
+            }
+
+            const container = document.getElementById('readingContainer');
+            container.innerHTML = `
+                <div class="reading-header">
+                    <h1>${article.title}</h1>
+                    <div class="reading-meta">${article.date} • ${article.author}</div>
+                </div>
+                <div class="reading-content">
+                    ${article.content.split('\n').map(p => `<p>${p}</p>`).join('')}
+                </div>
+            `;
+            
+            showPage('reading');
+        }
+
+        function toggleReadingMode() {
+            const container = document.getElementById('readingContainer');
+            container.classList.toggle('dark-mode');
+            
+            // Save preference if user is logged in
+            if (currentUser) {
+                const isDark = container.classList.contains('dark-mode');
+                localStorage.setItem('readingMode', isDark ? 'dark' : 'light');
+            }
+        }
+
+        function updateAccountPage() {
+            const accountInfo = document.getElementById('accountInfo');
+            
+            if (currentUser) {
+                accountInfo.innerHTML = `
+                    <h2>Welcome, ${currentUser.name}! 👋</h2>
+                    <div class="account-status status-member">✓ Member Account</div>
+                    
+                    <div class="pref-group">
+                        <h3>Account Details</h3>
+                        <p><strong>Email:</strong> ${currentUser.email}</p>
+                        <p><strong>Status:</strong> Full access to all articles</p>
+                        ${currentUser.isAdmin ? '<p><strong>Role:</strong> Administrator</p>' : ''}
+                    </div>
+
+                    <div class="pref-group">
+                        <h3>Reading Preferences</h3>
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="prefDarkMode" ${localStorage.getItem('readingMode') === 'dark' ? 'checked' : ''} onchange="saveReadingPref()">
+                            <span>Default to dark reading mode</span>
+                        </label>
+                    </div>
+
+                    <button class="submit-btn" onclick="logout()" style="margin-top: 30px; background: #f44336;">
+                        Logout
+                    </button>
+                `;
+            } else {
+                accountInfo.innerHTML = `
+                    <h2>Guest Account</h2>
+                    <div class="account-status status-guest">👤 Not Signed In</div>
+                    
+                    <div class="pref-group">
+                        <h3>Limited Access</h3>
+                        <p>You can read free articles, but members-only content requires an account.</p>
+                        <p style="margin-top: 15px;"><strong>Benefits of signing up:</strong></p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Access to all exclusive articles</li>
+                            <li>Customize your reading experience</li>
+                            <li>Save your preferences</li>
+                            <li>It's completely free!</li>
+                        </ul>
+                    </div>
+
+                    <button class="submit-btn" onclick="toggleAuth()" style="margin-top: 30px;">
+                        Create Free Account
+                    </button>
+                `;
+            }
+        }
+
+        function saveReadingPref() {
+            const isDark = document.getElementById('prefDarkMode').checked;
+            localStorage.setItem('readingMode', isDark ? 'dark' : 'light');
+            alert('Reading preference saved!');
+        }
+
+        function addArticle(event) {
+            event.preventDefault();
+            
+            if (!currentUser || !currentUser.isAdmin) {
+                alert('Admin access required');
+                return;
+            }
+
+            const newArticle = {
+                id: articles.length + 1,
+                title: document.getElementById('articleTitle').value,
+                excerpt: document.getElementById('articleExcerpt').value,
+                content: document.getElementById('articleContent').value,
+                category: document.getElementById('articleCategory').value,
+                access: document.getElementById('articleAccess').value,
+                date: new Date().toISOString().split('T')[0],
+                author: currentUser.name
+            };
+
+            articles.unshift(newArticle);
+            localStorage.setItem('articles', JSON.stringify(articles));
+            
+            // Clear form
+            event.target.reset();
+            
+            alert('Article published successfully! 🎉');
+            currentFilter = 'all'; // Reset filter
+            renderArticles();
+            showPage('articles');
+        }
+
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('newsletterEmail').value;
+            
+            // Get existing subscribers
+            let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+            
+            // Check if already subscribed
+            if (subscribers.includes(email)) {
+                alert('You\'re already subscribed! 📬');
+                return;
+            }
+            
+            // Add new subscriber
+            subscribers.push(email);
+            localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+            
+            // Clear form
+            document.getElementById('newsletterEmail').value = '';
+            
+            alert('🎉 Successfully subscribed! You\'ll receive our weekly newsletter with top articles every week.');
+        }
+
+        function viewNewsletterSubscribers() {
+            const subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+            
+            if (subscribers.length === 0) {
+                alert('No newsletter subscribers yet.');
+                return;
+            }
+            
+            const subscriberList = subscribers.map((email, index) => `${index + 1}. ${email}`).join('\n');
+            alert(`📬 Newsletter Subscribers (${subscribers.length}):\n\n${subscriberList}`);
+        }
+
+        // Apply saved reading preference when opening article
+        const savedReadingMode = localStorage.getItem('readingMode');
+        if (savedReadingMode === 'dark') {
+            document.getElementById('darkModeToggle').checked = true;
+        }
+    </script>
+</body>
+</html>
