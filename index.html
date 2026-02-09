@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>agora - Political Science & Markets Made Simple</title>
+    <!-- Plotly for interactive charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -1206,76 +1208,79 @@
     </footer>
 
     <script>
+        // ==================== API CONFIGURATION ====================
+        const API_URL = 'http://localhost:5001/api';
+
+        // Helper function for API calls
+        async function apiCall(endpoint, method = 'GET', data = null) {
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}${endpoint}`, options);
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || `HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        // ==================== API CONFIGURATION ====================
+        const API_URL = 'http://localhost:5001/api';
+
+        // Helper function for API calls
+        async function apiCall(endpoint, method = 'GET', data = null) {
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}${endpoint}`, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
         // State management
         let currentUser = null;
         let currentFilter = 'all'; // Track current filter
-        let articles = [
-            {
-                id: 1,
-                title: "Understanding Global Trade Wars",
-                excerpt: "A comprehensive look at how trade policies shape international relations and market dynamics.",
-                content: "Trade wars have become increasingly common in modern geopolitics. This article explores the mechanisms behind tariffs, quotas, and their ripple effects across global markets. From the US-China trade tensions to Brexit's impact on European commerce, we examine real-world cases with interactive charts showing trade volume changes over time. Understanding these dynamics is crucial for students of both political science and economics.",
-                access: "free",
-                category: "markets",
-                date: "2026-02-05",
-                author: "agora Team"
-            },
-            {
-                id: 2,
-                title: "The Rise of Populism in Western Democracies",
-                excerpt: "Analyzing the factors behind populist movements and their electoral success.",
-                content: "Populist movements have reshaped the political landscape across Western democracies. This deep dive examines the socioeconomic factors, media influence, and cultural shifts that have fueled populist sentiment. Through polling data and electoral analysis, we trace the trajectory of populist parties from fringe movements to mainstream political forces. Interactive maps show regional variations in populist support, while timeline visualizations highlight key moments in this political transformation.",
-                access: "members",
-                category: "politics",
-                date: "2026-02-03",
-                author: "agora Team"
-            },
-            {
-                id: 3,
-                title: "Central Banks and Monetary Policy Explained",
-                excerpt: "How central banks influence economies through interest rates and quantitative easing.",
-                content: "Central banks play a pivotal role in economic stability. This article demystifies monetary policy tools including interest rate adjustments, reserve requirements, and quantitative easing. We examine case studies from the Federal Reserve, European Central Bank, and Bank of Japan, with interactive charts showing the relationship between policy changes and economic indicators like inflation and unemployment. Perfect for students seeking to understand the intersection of economics and policy-making.",
-                access: "free",
-                category: "markets",
-                date: "2026-02-01",
-                author: "agora Team"
-            },
-            {
-                id: 4,
-                title: "Electoral Systems: First-Past-the-Post vs Proportional Representation",
-                excerpt: "Comparing different voting systems and their impact on democratic representation.",
-                content: "Electoral systems fundamentally shape political outcomes. This comprehensive analysis compares first-past-the-post, proportional representation, and mixed systems used around the world. Through simulation models and historical data, we show how different systems affect party representation, coalition formation, and voter behavior. Interactive visualizations allow you to see how the same election results would differ under various electoral frameworks.",
-                access: "members",
-                category: "politics",
-                date: "2026-01-30",
-                author: "agora Team"
-            },
-            {
-                id: 5,
-                title: "Stock Market Basics for Beginners",
-                excerpt: "A student-friendly introduction to how stock markets work and why they matter.",
-                content: "The stock market can seem intimidating, but it's fundamentally about companies raising capital and investors seeking returns. This beginner's guide covers market mechanics, key terminology, and the relationship between stock prices and company performance. We include interactive price charts, explanations of market indices, and simple examples of how economic events affect stock values. Essential reading for students exploring finance and economics.",
-                access: "free",
-                category: "markets",
-                date: "2026-01-28",
-                author: "agora Team"
-            },
-            {
-                id: 6,
-                title: "The European Union: Integration and Challenges",
-                excerpt: "Exploring the EU's evolution, institutions, and contemporary political challenges.",
-                content: "The European Union represents one of history's most ambitious political experiments. This article traces the EU's development from the Treaty of Rome to the present day, examining its complex institutional structure and decision-making processes. We analyze current challenges including migration policy, economic disparities between member states, and the rise of Euroscepticism. Interactive maps show EU expansion over time, while charts illustrate economic integration through trade data.",
-                access: "members",
-                category: "politics",
-                date: "2026-01-25",
-                author: "agora Team"
-            }
-        ];
+        let articles = []; // Will be loaded from API
 
-        // Load articles from localStorage on page load
-        const savedArticles = localStorage.getItem('articles');
-        if (savedArticles) {
-            articles = JSON.parse(savedArticles);
+        // Load articles from API
+        async function loadArticles() {
+            try {
+                articles = await apiCall('/articles');
+                renderArticles();
+            } catch (error) {
+                console.error('Failed to load articles:', error);
+                // Show sample articles as fallback if API fails
+                articles = [];
+                renderArticles();
+            }
         }
 
         // Check for logged in user
@@ -1286,7 +1291,7 @@
         }
 
         // Initialize
-        renderArticles();
+        loadArticles(); // Load from API instead of using hardcoded articles
         updateAccountPage();
 
         function showPage(page) {
@@ -1300,6 +1305,9 @@
 
             // Show selected page
             document.getElementById(page + 'Page').classList.remove('hidden');
+
+            // Scroll to top of page
+            window.scrollTo(0, 0);
 
             // Reset filter when going to articles page from nav
             if (page === 'articles') {
@@ -1338,33 +1346,41 @@
             document.getElementById('loginForm').classList.remove('hidden');
         }
 
-        function signup(event) {
+        async function signup(event) {
             event.preventDefault();
             const name = document.getElementById('signupName').value;
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
 
-            // In a real app, you'd send this to a server
-            currentUser = { name, email, isAdmin: email === 'admin@agora.com' };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            
-            updateAuthUI();
-            closeModal();
-            alert('Account created successfully! Welcome to agora 🎉');
+            try {
+                const result = await apiCall('/auth/signup', 'POST', { name, email, password });
+                currentUser = result.user;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                updateAuthUI();
+                closeModal();
+                alert('Account created successfully! Welcome to agora 🎉');
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
         }
 
-        function login(event) {
+        async function login(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            // Simple demo login
-            currentUser = { name: email.split('@')[0], email, isAdmin: email === 'admin@agora.com' };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            
-            updateAuthUI();
-            closeModal();
-            alert('Welcome back! 👋');
+            try {
+                const result = await apiCall('/auth/login', 'POST', { email, password });
+                currentUser = result.user;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                updateAuthUI();
+                closeModal();
+                alert('Welcome back! 👋');
+            } catch (error) {
+                alert('Invalid credentials. Please try again.');
+            }
         }
 
         function logout() {
@@ -1451,21 +1467,16 @@
             renderArticles();
         }
 
-        function subscribeNewsletter(event) {
+        async function subscribeNewsletter(event) {
             event.preventDefault();
             const email = document.getElementById('newsletterEmail').value;
             
-            // In a real app, you'd send this to your email service (Mailchimp, SendGrid, etc.)
-            // For now, we'll save it locally
-            let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
-            
-            if (subscribers.includes(email)) {
-                alert('You\'re already subscribed! 📬');
-            } else {
-                subscribers.push(email);
-                localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+            try {
+                await apiCall('/newsletter/subscribe', 'POST', { email });
                 alert('Thanks for subscribing! 🎉 You\'ll receive our weekly newsletter with top articles.');
                 event.target.reset();
+            } catch (error) {
+                alert('Error subscribing. Please try again.');
             }
         }
 
@@ -1561,7 +1572,7 @@
             alert('Reading preference saved!');
         }
 
-        function addArticle(event) {
+        async function addArticle(event) {
             event.preventDefault();
             
             if (!currentUser || !currentUser.isAdmin) {
@@ -1569,27 +1580,28 @@
                 return;
             }
 
-            const newArticle = {
-                id: articles.length + 1,
+            const articleData = {
                 title: document.getElementById('articleTitle').value,
                 excerpt: document.getElementById('articleExcerpt').value,
                 content: document.getElementById('articleContent').value,
                 category: document.getElementById('articleCategory').value,
                 access: document.getElementById('articleAccess').value,
-                date: new Date().toISOString().split('T')[0],
                 author: currentUser.name
             };
 
-            articles.unshift(newArticle);
-            localStorage.setItem('articles', JSON.stringify(articles));
-            
-            // Clear form
-            event.target.reset();
-            
-            alert('Article published successfully! 🎉');
-            currentFilter = 'all'; // Reset filter
-            renderArticles();
-            showPage('articles');
+            try {
+                await apiCall('/articles', 'POST', articleData);
+                
+                // Clear form
+                event.target.reset();
+                
+                alert('Article published successfully! 🎉');
+                currentFilter = 'all';
+                await loadArticles(); // Reload articles from API
+                showPage('articles');
+            } catch (error) {
+                alert('Error publishing article: ' + error.message);
+            }
         }
 
         function subscribeNewsletter(event) {
@@ -1616,17 +1628,26 @@
             alert('🎉 Successfully subscribed! You\'ll receive our weekly newsletter with top articles every week.');
         }
 
-        function viewNewsletterSubscribers() {
-            const subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
-            
-            if (subscribers.length === 0) {
-                alert('No newsletter subscribers yet.');
-                return;
+        async function viewNewsletterSubscribers() {
+            try {
+                const result = await apiCall('/newsletter/subscribers');
+                
+                if (result.length === 0) {
+                    alert('No newsletter subscribers yet.');
+                    return;
+                }
+                
+                const subscriberList = result.map((sub, index) => `${index + 1}. ${sub.email}`).join('\n');
+                alert(`📬 Newsletter Subscribers (${result.length}):\n\n${subscriberList}`);
+            } catch (error) {
+                alert('Error loading subscribers');
             }
-            
-            const subscriberList = subscribers.map((email, index) => `${index + 1}. ${email}`).join('\n');
-            alert(`📬 Newsletter Subscribers (${subscribers.length}):\n\n${subscriberList}`);
         }
+
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            loadArticles(); // Load articles from API
+        });
 
         // Apply saved reading preference when opening article
         const savedReadingMode = localStorage.getItem('readingMode');
