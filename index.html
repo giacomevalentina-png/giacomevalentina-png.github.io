@@ -4,33 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>agora - Political Science & Markets Made Simple</title>
-    
-    <!--
-    ╔══════════════════════════════════════════════════════════════════╗
-    ║  DEPLOYMENT INSTRUCTIONS                                          ║
-    ╠══════════════════════════════════════════════════════════════════╣
-    ║                                                                   ║
-    ║  1. Deploy Backend to Railway:                                   ║
-    ║     - Upload your backend folder to GitHub                       ║
-    ║     - Connect to Railway.app                                     ║
-    ║     - Railway auto-deploys and gives you a URL                   ║
-    ║                                                                   ║
-    ║  2. Update This File:                                            ║
-    ║     - Find line with: PRODUCTION_API_URL                         ║
-    ║     - Replace 'YOUR-BACKEND-URL' with your Railway URL           ║
-    ║     - Example: https://agora-production.railway.app/api          ║
-    ║                                                                   ║
-    ║  3. Deploy Frontend:                                             ║
-    ║     - Upload this index.html to Netlify/Vercel                   ║
-    ║     - OR point your domain's DNS to Netlify                      ║
-    ║                                                                   ║
-    ║  The website automatically detects if running locally or online! ║
-    ║  - Local: Uses http://localhost:5001/api                         ║
-    ║  - Online: Uses your Railway backend URL                         ║
-    ║                                                                   ║
-    ╚══════════════════════════════════════════════════════════════════╝
-    -->
-    
     <!-- Plotly for interactive charts -->
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <style>
@@ -1101,29 +1074,9 @@
                 We believe that understanding politics and markets shouldn't be overwhelming. agora was created to break down complex political science concepts and market dynamics into simple, interactive, and engaging content.
             </p>
             
-            <h2 style="font-size: 32px; margin-bottom: 20px; margin-top: 40px;">Meet Our Founders</h2>
-            
-            <!-- Founder 1 -->
-            <div style="background: linear-gradient(135deg, #f4a6b8 0%, #fce4e4 100%); padding: 30px; border-radius: 15px; margin-bottom: 25px;">
-                <h3 style="font-size: 24px; margin-bottom: 15px; color: #2d2d2d;">Valentina Ancona</h3>
-                <p style="font-size: 16px; font-weight: 600; color: #666; margin-bottom: 15px;">Founder & Technical Lead</p>
-                <p style="font-size: 17px; line-height: 1.8; color: #333;">
-                    An Italian economics enthusiast studying Economic and Quantitative Risk Management, Valentina aspires to become a quant trader. She developed agora as a platform to practice and showcase her Python programming skills—all the interactive tools, charts, and data visualizations you see are powered by her Python code. Through this project, she bridges her passion for financial markets with hands-on technical development, creating educational content that makes complex market concepts accessible to everyone.
-                </p>
-            </div>
-            
-            <!-- Founder 2 -->
-            <div style="background: linear-gradient(135deg, #b8d4e8 0%, #e8f4f8 100%); padding: 30px; border-radius: 15px; margin-bottom: 40px;">
-                <h3 style="font-size: 24px; margin-bottom: 15px; color: #2d2d2d;">Rebecca Ford-Byrne</h3>
-                <p style="font-size: 16px; font-weight: 600; color: #666; margin-bottom: 15px;">Co-Founder & Content Director</p>
-                <p style="font-size: 17px; line-height: 1.8; color: #333;">
-                    A Canadian scholar studying Political Science and International Relations, Rebecca aspires to become a role figure in leading the young generation toward a more prosperous future. She believes that words and education are the most powerful tools for change. Through agora, she crafts compelling narratives that demystify political systems and international affairs, empowering readers with the knowledge they need to become informed global citizens and active participants in shaping tomorrow's world.
-                </p>
-            </div>
-            
             <h2 style="font-size: 32px; margin-bottom: 20px; margin-top: 40px;">What We Offer</h2>
             <p style="font-size: 18px; line-height: 1.8; color: #666; margin-bottom: 20px;">
-                • Interactive charts and visualizations (built with Python)<br>
+                • Interactive charts and visualizations<br>
                 • In-depth political analysis made simple<br>
                 • Market trends and insights<br>
                 • Polls and data-driven content<br>
@@ -1256,17 +1209,7 @@
 
     <script>
         // ==================== API CONFIGURATION ====================
-        // Auto-detect if running locally or on production
-        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        
-        // Production API URL (Railway backend)
-        const PRODUCTION_API_URL = 'https://agora-backend-production-2347.up.railway.app/api';
-        const LOCAL_API_URL = 'http://localhost:5001/api';
-        
-        const API_URL = isLocalhost ? LOCAL_API_URL : PRODUCTION_API_URL;
-        
-        console.log('🚀 Running in', isLocalhost ? 'LOCAL' : 'PRODUCTION', 'mode');
-        console.log('📡 API URL:', API_URL);
+        const API_URL = 'http://localhost:5001/api';
 
         // Helper function for API calls
         async function apiCall(endpoint, method = 'GET', data = null) {
@@ -1284,16 +1227,40 @@
             try {
                 const response = await fetch(`${API_URL}${endpoint}`, options);
                 if (!response.ok) {
-                    const error = await response.json().catch(() => ({}));
+                    const error = await response.json();
                     throw new Error(error.error || `HTTP error! status: ${response.status}`);
                 }
                 return await response.json();
             } catch (error) {
                 console.error('API Error:', error);
-                // If production API fails, show helpful message
-                if (!isLocalhost) {
-                    console.error('⚠️ Backend not responding. Make sure Railway deployment is running!');
+                throw error;
+            }
+        }
+
+        // ==================== API CONFIGURATION ====================
+        const API_URL = 'http://localhost:5001/api';
+
+        // Helper function for API calls
+        async function apiCall(endpoint, method = 'GET', data = null) {
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json'
                 }
+            };
+            
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}${endpoint}`, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('API Error:', error);
                 throw error;
             }
         }
